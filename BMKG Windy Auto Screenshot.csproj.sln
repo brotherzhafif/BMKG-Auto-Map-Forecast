@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMKG Windy Auto Screenshot", "BMKG Windy Auto Screenshot.csproj", "{F083E21D-BC6A-490C-B5E0-2F13C091084D}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WAS Installer", "..\WAS Installer\WAS Installer.vdproj", "{D0ED60E4-044B-4476-8050-92BD4E704CB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Description = Screenshot Keadaan Cuaca Dari Website Windy.com Oleh Zhafif
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F083E21D-BC6A-490C-B5E0-2F13C091084D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F083E21D-BC6A-490C-B5E0-2F13C091084D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F083E21D-BC6A-490C-B5E0-2F13C091084D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F083E21D-BC6A-490C-B5E0-2F13C091084D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0ED60E4-044B-4476-8050-92BD4E704CB4}.Debug|Any CPU.ActiveCfg = Debug
+		{D0ED60E4-044B-4476-8050-92BD4E704CB4}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2F32DFA-3E0B-426C-B471-9FC2E5B0B077}
+	EndGlobalSection
+EndGlobal

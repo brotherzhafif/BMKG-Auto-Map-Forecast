@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>WAS.ico</ApplicationIcon>
+    <Company>BrotherZhafif</Company>
+    <Product>BMKG Windy Web Auto Screenshot</Product>
+    <Authors>Raja Zhafif Raditya Harahap</Authors>
+    <Version>420.69</Version>
+    <PackageId></PackageId>
+    <Description>Aplikasi Screenshot Website Windy Untuk Arsip Cuaca BMKG Oleh Raja Zhafif Raditya Harahap</Description>
+    <Copyright>@2022 BrotherZhafif</Copyright>
+    <PackageIcon>WAS.png</PackageIcon>
+    <PackageReleaseNotes>GPP</PackageReleaseNotes>
+    <PackageTags>Bot Screenshot</PackageTags>
+    <SignAssembly>False</SignAssembly>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="WAS.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Pictures\WAS.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.4.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+  </ItemGroup>
+
+</Project>
