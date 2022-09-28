@@ -2,9 +2,8 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System.Configuration;
-using System.Threading;
 using SeleniumExtras.WaitHelpers;
-using System.IO;
+using System.ComponentModel;
 
 namespace WebScreenshot
 { 
@@ -64,6 +63,10 @@ namespace WebScreenshot
                 {
                     Environment.Exit(0);
                 }
+                else
+                {
+                    return;
+                }
             }
         }
         
@@ -87,7 +90,7 @@ namespace WebScreenshot
             options.AddArgument("--disable-gpu");
             options.AddArgument("test-type");
             options.AddArgument("start-maximized");
-            options.AddArgument("--window-size=1920,1080");
+            options.AddArgument("--window-size=1024,768");
             options.AddArgument("test-type=browser");
             options.AddArgument("--ignore-certificate-errors");
             options.AddArgument("--enable-precise-memory-info");
@@ -127,7 +130,7 @@ namespace WebScreenshot
             options.AddArgument("--disable-gpu");
             options.AddArgument("test-type");
             options.AddArgument("start-maximized");
-            options.AddArgument("--window-size=1920,1080");
+            options.AddArgument("--window-size=1024,768");
             options.AddArgument("test-type=browser");
             options.AddArgument("--ignore-certificate-errors");
             options.AddArgument("--enable-precise-memory-info");
@@ -201,15 +204,9 @@ namespace WebScreenshot
                 driver.Navigate().GoToUrl(Links[i]);
                 ITakesScreenshot screenshotDriver = driver as ITakesScreenshot;
 
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-                wait.Until(driver => driver.FindElement(By.Id("detail-data-table")));
-                wait.Until(driver => driver.FindElement(By.Id("detail-box")));
-                wait.Until(driver => driver.FindElements(By.TagName("td")));
-                wait.Until(driver => driver.FindElements(By.TagName("div")));
-                wait.Until(driver => driver.FindElements(By.TagName("img")));
-
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(120));
                 wait.Until(ExpectedConditions.ElementIsVisible(By.TagName("img")));
-
+                Thread.Sleep(10000);
                 Screenshot screenshot = screenshotDriver.GetScreenshot();
                 screenshot.SaveAsFile(dir + "\\" + Names[i] + ".png");
 
@@ -225,7 +222,6 @@ namespace WebScreenshot
         {
             return ConfigurationManager.AppSettings[key];
         }
-
     }
 
 }
