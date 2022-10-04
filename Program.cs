@@ -3,20 +3,19 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System.Configuration;
 using SeleniumExtras.WaitHelpers;
-using System.ComponentModel;
 
 namespace WebScreenshot
-{ 
+{
     internal class Program
     {
 
-        public static string dir = DateTime.Now.ToString("dd"+" MM"+" yyyy");
+        public static string dir = DateTime.Now.ToString("dd" + " MMMM" + " yyyy");
         public static string nama = "";
         public static string link = "";
 
         static void Main(String[] args)
         {
-            Console.Title = "BMKG - Web Auto Screenshot By Zhafif Sekarang Jam "+ DateTime.UtcNow.ToString() +" UTC+ ";
+            Console.Title = "BMKG - Web Auto Screenshot By Zhafif Sekarang Jam " + DateTime.UtcNow.ToString() + " UTC+ ";
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.Clear();
 
@@ -33,48 +32,54 @@ namespace WebScreenshot
             Console.WriteLine("Jadi Anda Mau Ngescreenshot Web Apa Hari Ini ?");
             Console.WriteLine("");
 
-            while (true)
+            bool loop = true;
+
+
+            Console.WriteLine("Ketik Y untuk Screenshot Web Costume");
+            Console.WriteLine("Ketik W untuk Screenshot Web Windy.com Untuk Arsip BMKG");
+            Console.WriteLine("Ketik N Atau C Atau E untuk Keluar");
+
+            string Y = Console.ReadLine();
+
+            if (loop = true)
             {
-                
-
-                //PIIHAN MENU
-
-                Console.WriteLine("Ketik Y untuk Screenshot Web Costume");
-                Console.WriteLine("Ketik W untuk Screenshot Web Windy.com Untuk Arsip BMKG");
-                Console.WriteLine("Ketik N Atau C Atau E untuk Keluar");
-
-                string Y = Console.ReadLine();
-
-                if (Y == "y" || Y == "Y")
+                while (true)
                 {
-                    CaptureCosutmeLink();
-                    return;
-                }
-                else if (Y == "w" || Y == "W")
-                {
-                    CaptureWebPage();
-                    return;
-                }
-                else if (Y == "a")
-                {
-                    return;
-                }
-                else if (Y == "n" || Y == "N" || Y == "c" || Y == "C" || Y == "e" || Y == "E")
-                {
-                    Environment.Exit(0);
-                }
-                else
-                {
-                    return;
-                }
+                    LOOPING(Y, loop);
+                    break;
+                    Console.WriteLine(Y);
+                } 
+            }
+            else
+            {
+                Environment.Exit(0);
             }
         }
-        
-
-        private static string GetLinks(string key)
+        private static bool LOOPING(string Y, bool loop)
         {
-            return ConfigurationManager.AppSettings.Get(key);
+            if (Y == "y" || Y == "Y")
+            {
+                CaptureCosutmeLink();
+            }
+            else if (Y == "w" || Y == "W")
+            {
+                CaptureWebPage();
+            }
+            else if (Y == "a")
+            {
+                loop = true;
+            }
+            else if (Y == "n" || Y == "N" || Y == "c" || Y == "C" || Y == "e" || Y == "E")
+            {
+                Environment.Exit(0);
+            }
+            else
+            {
+                loop = false;
+            }
+            return loop;
         }
+        
         private static void CaptureCosutmeLink()
         {
             Console.WriteLine("Anda Ingin Melakukan Screenshot Lainnya ? Silahkan Masukan Nama Filenya");
@@ -90,7 +95,7 @@ namespace WebScreenshot
             options.AddArgument("--disable-gpu");
             options.AddArgument("test-type");
             options.AddArgument("start-maximized");
-            options.AddArgument("--window-size=1024,768");
+            options.AddArgument("--window-size=1280,720");
             options.AddArgument("test-type=browser");
             options.AddArgument("--ignore-certificate-errors");
             options.AddArgument("--enable-precise-memory-info");
@@ -112,15 +117,14 @@ namespace WebScreenshot
             ITakesScreenshot screenshotDriver = driver as ITakesScreenshot;
 
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-            wait.Until(driver => driver.FindElements(By.TagName("div")));
+            Thread.Sleep(10000);
             wait.Until(ExpectedConditions.ElementIsVisible(By.TagName("img")));
             
             Screenshot screenshot = screenshotDriver.GetScreenshot();
-            screenshot.SaveAsFile(dir + "\\" + nama + ".png");
+            screenshot.SaveAsFile(GetSetting(dir) + dir + "\\" + nama + ".png");
             
             Console.WriteLine(nama + " Telah Berhasil di Save");
-
-            return;
+            driver.Close();
         }
 
         private static void CaptureWebPage()
@@ -130,7 +134,7 @@ namespace WebScreenshot
             options.AddArgument("--disable-gpu");
             options.AddArgument("test-type");
             options.AddArgument("start-maximized");
-            options.AddArgument("--window-size=1024,768");
+            options.AddArgument("--window-size=1280,720");
             options.AddArgument("test-type=browser");
             options.AddArgument("--ignore-certificate-errors");
             options.AddArgument("--enable-precise-memory-info");
@@ -208,19 +212,24 @@ namespace WebScreenshot
                 wait.Until(ExpectedConditions.ElementIsVisible(By.TagName("img")));
                 Thread.Sleep(10000);
                 Screenshot screenshot = screenshotDriver.GetScreenshot();
-                screenshot.SaveAsFile(dir + "\\" + Names[i] + ".png");
+                screenshot.SaveAsFile(GetSetting(dir) + dir + "\\" + Names[i] + ".png");
 
                 Console.WriteLine(Names[i] + " Telah Berhasil di Save");
                 Console.WriteLine("");
             }
 
             Console.WriteLine("Screenshot Windy.com Berhasil");
-
-            return;
+            driver.Close();
         }
+        
         private static string GetSetting(string key)
         {
             return ConfigurationManager.AppSettings[key];
+        }
+
+        private static string GetLinks(string key)
+        {
+            return ConfigurationManager.AppSettings.Get(key);
         }
     }
 
