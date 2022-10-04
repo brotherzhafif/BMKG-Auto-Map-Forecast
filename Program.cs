@@ -168,29 +168,6 @@ namespace WebScreenshot
                 GetSetting("Kuala Pembuang"),
                 GetSetting("Seruyan Hilir")
             };
-
-            string[] Names = new string[]
-            {
-                "Baamang",
-                "Antang Kalang",
-                "Bukit Sentuai",
-                "Cempaga",
-                "Cempaga Hulu",
-                "Kota Besi",
-                "Mentawa Baru Ketapang",
-                "Mentaya Hilir Selatan",
-                "Mentaya Hilir Utara",
-                "Mentaya Hulu",
-                "Parenggean",
-                "Pulau Hanaut",
-                "Seranau",
-                "Telaga Antang",
-                "Telawang",
-                "Teluk Sampit",
-                "Tualan Hulu",
-                "Kuala Pembuang",
-                "Seruyan Hilir"
-            };
  
             Console.WriteLine("");
             Console.WriteLine("Sedang Menghidupkan Bot Aplikasinya ...", Console.ForegroundColor = ConsoleColor.Yellow);
@@ -202,7 +179,7 @@ namespace WebScreenshot
             for (int i = 0; i < Links.Count(); i++)
             {
                 Console.WriteLine("");
-                Console.WriteLine("Sedang Memproses Tampilan Cuaca " + Names[i], Console.ForegroundColor = ConsoleColor.White);
+                Console.WriteLine("Sedang Memproses Tampilan Cuaca " + GetSetting(i.ToString()), Console.ForegroundColor = ConsoleColor.White);
 
                 
                 driver.Navigate().GoToUrl(Links[i]);
@@ -212,9 +189,9 @@ namespace WebScreenshot
                 wait.Until(ExpectedConditions.ElementIsVisible(By.TagName("img")));
                 Thread.Sleep(10000);
                 Screenshot screenshot = screenshotDriver.GetScreenshot();
-                screenshot.SaveAsFile(GetSetting(dir) + dir + "\\" + Names[i] + ".png");
+                screenshot.SaveAsFile(GetSetting(dir) + dir + "\\" + GetSetting(i.ToString()) + ".png");
 
-                Console.WriteLine(Names[i] + " Telah Berhasil di Save");
+                Console.WriteLine(GetSetting(i.ToString()) + " Telah Berhasil di Save");
                 Console.WriteLine("");
             }
 
