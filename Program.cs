@@ -9,13 +9,14 @@ namespace WebScreenshot
     internal class Program
     {
 
-        public static string dir = DateTime.Now.ToString("dd" + " MMMM" + " yyyy");
+        public static string dir = GetSetting("dir").ToString() + DateTime.Now.ToString("dd" + " MMMM" + " yyyy");
         public static string nama = "";
         public static string link = "";
+        public static string Y;
 
         static void Main(String[] args)
         {
-            Console.Title = "BMKG - Web Auto Screenshot By Zhafif Sekarang Jam " + DateTime.UtcNow.ToString() + " UTC+ ";
+            Console.Title = "Web Auto Screenshot By Zhafif  " + DateTime.UtcNow.ToString() + " UTC+ ";
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.Clear();
 
@@ -31,32 +32,17 @@ namespace WebScreenshot
 
             Console.WriteLine("Jadi Anda Mau Ngescreenshot Web Apa Hari Ini ?");
             Console.WriteLine("");
-
-            bool loop = true;
-
-
-            Console.WriteLine("Ketik Y untuk Screenshot Web Costume");
-            Console.WriteLine("Ketik W untuk Screenshot Web Windy.com Untuk Arsip BMKG");
-            Console.WriteLine("Ketik N Atau C Atau E untuk Keluar");
-
-            string Y = Console.ReadLine();
-
-            if (loop = true)
-            {
-                while (true)
-                {
-                    LOOPING(Y, loop);
-                    break;
-                    Console.WriteLine(Y);
-                } 
-            }
-            else
-            {
-                Environment.Exit(0);
-            }
+            
+            LOOPING(Y);
+            Console.WriteLine(Y);
         }
-        private static bool LOOPING(string Y, bool loop)
+        private static void LOOPING(string Y)
         {
+            Console.WriteLine("Ketik Y untuk Screenshot Web Costume");
+            Console.WriteLine("Ketik W untuk Screenshot Web "+GetSetting("judul"));
+            Console.WriteLine("Ketik N Atau C Atau E untuk Keluar");
+            Y = Console.ReadLine();
+
             if (Y == "y" || Y == "Y")
             {
                 CaptureCosutmeLink();
@@ -65,19 +51,15 @@ namespace WebScreenshot
             {
                 CaptureWebPage();
             }
-            else if (Y == "a")
-            {
-                loop = true;
-            }
             else if (Y == "n" || Y == "N" || Y == "c" || Y == "C" || Y == "e" || Y == "E")
             {
                 Environment.Exit(0);
             }
             else
             {
-                loop = false;
+                Console.WriteLine("Tolong Ketik Pilihan Yang Tersedia Saja");
+                LOOPING(Y);
             }
-            return loop;
         }
         
         private static void CaptureCosutmeLink()
@@ -115,16 +97,17 @@ namespace WebScreenshot
             Console.WriteLine("Memproses Tampilan Website " + nama, Console.ForegroundColor = ConsoleColor.White);
             driver.Navigate().GoToUrl(link);
             ITakesScreenshot screenshotDriver = driver as ITakesScreenshot;
-
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
             Thread.Sleep(10000);
             wait.Until(ExpectedConditions.ElementIsVisible(By.TagName("img")));
             
             Screenshot screenshot = screenshotDriver.GetScreenshot();
-            screenshot.SaveAsFile(GetSetting(dir) + dir + "\\" + nama + ".png");
+            screenshot.SaveAsFile(dir + "\\" + nama + ".png");
             
             Console.WriteLine(nama + " Telah Berhasil di Save");
             driver.Close();
+
+            LOOPING(Y);
         }
 
         private static void CaptureWebPage()
@@ -146,57 +129,51 @@ namespace WebScreenshot
           
             IWebDriver driver = new ChromeDriver(options);  
 
-            string[] Links = new string[]
-            {
-                GetSetting("Baamang"),
-                GetSetting("Antang Kalang"),
-                GetSetting("Bukit Sentuai"),
-                GetSetting("Cempaga"),
-                GetSetting("Cempaga Hulu"),
-                GetSetting("Kota Besi"),
-                GetSetting("Mentawa Baru Ketapang"),
-                GetSetting("Mentaya Hilir Selatan"),
-                GetSetting("Mentaya Hilir Utara"),
-                GetSetting("Mentaya Hulu"),
-                GetSetting("Parenggean"),
-                GetSetting("Pulau Hanaut"),
-                GetSetting("Seranau"),
-                GetSetting("Telaga Antang"),
-                GetSetting("Telawang"),
-                GetSetting("Teluk Sampit"),
-                GetSetting("Tualan Hulu"),
-                GetSetting("Kuala Pembuang"),
-                GetSetting("Seruyan Hilir")
-            };
- 
             Console.WriteLine("");
             Console.WriteLine("Sedang Menghidupkan Bot Aplikasinya ...", Console.ForegroundColor = ConsoleColor.Yellow);
             Console.WriteLine("Jangan Diclose Sampai Selesai Ya Kalo Mau Beneran Ke Save", Console.ForegroundColor = ConsoleColor.Red);
             Console.WriteLine("", Console.ForegroundColor = ConsoleColor.White);
 
-            driver.Navigate().GoToUrl(Links[0]);
+            driver.Navigate().GoToUrl(GetSetting("link0"));
 
-            for (int i = 0; i < Links.Count(); i++)
+            try
             {
-                Console.WriteLine("");
-                Console.WriteLine("Sedang Memproses Tampilan Cuaca " + GetSetting(i.ToString()), Console.ForegroundColor = ConsoleColor.White);
+                for (int i = 0; i < int.Parse(GetSetting("jumlah")); i++)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("Sedang Memproses Tampilan Halaman " + GetSetting(i.ToString()), Console.ForegroundColor = ConsoleColor.White);
 
-                
-                driver.Navigate().GoToUrl(Links[i]);
-                ITakesScreenshot screenshotDriver = driver as ITakesScreenshot;
 
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(120));
-                wait.Until(ExpectedConditions.ElementIsVisible(By.TagName("img")));
-                Thread.Sleep(10000);
-                Screenshot screenshot = screenshotDriver.GetScreenshot();
-                screenshot.SaveAsFile(GetSetting(dir) + dir + "\\" + GetSetting(i.ToString()) + ".png");
+                    driver.Navigate().GoToUrl(GetSetting("link" + i.ToString()));
+                    ITakesScreenshot screenshotDriver = driver as ITakesScreenshot;
 
-                Console.WriteLine(GetSetting(i.ToString()) + " Telah Berhasil di Save");
-                Console.WriteLine("");
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(120));
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.TagName("img")));
+                    Thread.Sleep(10000);
+
+                    Screenshot screenshot = screenshotDriver.GetScreenshot();
+                    screenshot.SaveAsFile(dir + "\\" + GetSetting(i.ToString()) + ".png");
+
+                    Console.WriteLine(GetSetting(i.ToString()) + " Telah Berhasil di Save");
+                    Console.WriteLine("");
+                }
+            }
+            catch (Exception e)
+            {
+                if(e.ToString() == "System.ArgumentNullException: Argument 'url'")
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("Screenshot Website "+ GetSetting("judul") + " Berhasil");
+                    driver.Close();
+
+                    LOOPING(Y);
+                }
             }
 
-            Console.WriteLine("Screenshot Windy.com Berhasil");
+            Console.WriteLine(GetSetting("Screenshot Website "+ GetSetting("judul") + " Berhasil"));
             driver.Close();
+
+            LOOPING(Y);
         }
         
         private static string GetSetting(string key)
