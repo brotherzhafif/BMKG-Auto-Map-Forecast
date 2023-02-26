@@ -10,6 +10,8 @@ namespace WebScreenshot
     {
 
         public static string dir = GetSetting("dir").ToString() + DateTime.Now.ToString("dd" + " MMMM" + " yyyy");
+        public static string W = GetSetting("W").ToString();
+        public static string H = GetSetting("H").ToString();
         public static string nama = "";
         public static string link = "";
         public static string Y;
@@ -77,14 +79,13 @@ namespace WebScreenshot
             options.AddArgument("--disable-gpu");
             options.AddArgument("test-type");
             options.AddArgument("start-maximized");
-            options.AddArgument("--window-size=1280,720");
+            options.AddArgument("--window-size="+ W +"," + H);
             options.AddArgument("test-type=browser");
             options.AddArgument("--ignore-certificate-errors");
             options.AddArgument("--enable-precise-memory-info");
             options.AddArgument("--disable-default-apps");
             options.AddArguments("--disable-popup-blocking");
             options.AddArgument("--headless");
-            options.AddArgument("user-agent-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36");
 
 
             IWebDriver driver = new ChromeDriver(options);
@@ -117,14 +118,13 @@ namespace WebScreenshot
             options.AddArgument("--disable-gpu");
             options.AddArgument("test-type");
             options.AddArgument("start-maximized");
-            options.AddArgument("--window-size=1280,720");
+            options.AddArgument("--window-size=" + W + "," + H);
             options.AddArgument("test-type=browser");
             options.AddArgument("--ignore-certificate-errors");
             options.AddArgument("--enable-precise-memory-info");
             options.AddArgument("--disable-default-apps");
             options.AddArguments("--disable-popup-blocking");
             options.AddArgument("--headless");
-            options.AddArgument("user-agent-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36");
 
           
             IWebDriver driver = new ChromeDriver(options);  
